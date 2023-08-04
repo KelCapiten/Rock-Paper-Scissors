@@ -15,8 +15,12 @@
 */
 
 function compChoice() {
-    let choice = ((Math.floor(Math.random()*3))+1);
+    let choice = (Math.floor(Math.random()*3));
     return choice;
 }
 
-console.log(compChoice())
+function mapCompChoice() {
+    let choiceArray = ["rock", "paper", "scissors"];
+    let choice = choiceArray[compChoice()];
+    return choice;
+}
