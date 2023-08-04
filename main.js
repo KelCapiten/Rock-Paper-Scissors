@@ -35,3 +35,18 @@ function userChoice() {
     return choice;
 }
 
+function checkChoice(choice = userChoice()) {
+    let validateThis = parseInt(choice);
+    while ((validateThis < 1 || validateThis > 3) || (isNaN(validateThis))) {
+        while (isNaN(validateThis)) {
+            console.log("Use numbers only for your selection. Select either options 1, 2 or 3");
+            validateThis = userChoice();
+        }
+        while (validateThis < 1 || validateThis > 3) {
+            console.log("Only 3 options to choose from. 1, 2 or 3. Try again.");
+            validateThis = userChoice();
+        }
+    }
+    return validateThis;
+}
+
