@@ -19,8 +19,9 @@ function compChoice() {
     return choice;
 }
 
-function mapCompChoice() {
+function mapChoice(index = compChoice()) {
     let choiceArray = ["rock", "paper", "scissors"];
-    let choice = choiceArray[compChoice()];
+    let choice = choiceArray[index];
     return choice;
 }
+
