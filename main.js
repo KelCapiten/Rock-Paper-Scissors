@@ -25,3 +25,13 @@ function mapChoice(index = compChoice()) {
     return choice;
 }
 
+function userChoice() {
+    console.log("Make your selection.");
+    console.log("1. Rock?");
+    console.log("2. Paper?");
+    console.log("3. Scissors?");
+
+    let choice = window.prompt("What will it be?");
+    return choice;
+}
+
