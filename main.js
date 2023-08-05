@@ -55,13 +55,43 @@ function isUserWinner(user = checUserkChoice(), comp = compChoice()) {
         console.log("It's a tie!!! AGAIN!");
     } else {
         if ((user == 0 && comp == 1) || (user == 1 && comp == 2) || (user == 2 && comp == 0)) {
-            console.log(`You loose, sorry. ${mapChoice(comp)} beats ${mapChoice(user)}. AI is taking over!`);
+            console.log(`You loose the round, sorry. ${mapChoice(comp)} beats ${mapChoice(user)}. AI is taking over!`);
             return false;
         } else {
-            console.log(`Nice!!, you win. ${mapChoice(user)} beats ${mapChoice(comp)}. Keep em coming`);
+            console.log(`Nice!!, you win the round. ${mapChoice(user)} beats ${mapChoice(comp)}. Keep em coming`);
             return true;
         }
     }
 
 }
 
+function game() {
+    let i = 0;
+    let user = 0;
+    let comp = 0;
+
+    while (i < 5) {
+        let winner = isUserWinner();
+
+        while (winner == undefined) {
+            console.log(`Your score is: ${user}. Comp score is: ${comp}.`);
+            winner = isUserWinner();
+        }
+        if (winner) {
+            user += 1;
+            console.log(`Your score is: ${user}. Comp score is: ${comp}.`);
+        } else {
+            comp += 1;
+            console.log(`Your score is: ${user}. Comp score is: ${comp}.`);
+        }
+    ++i;
+    }
+
+    if (user > comp) {
+        console.log("YOU HAVE WON THE GAME!!");
+        return true;
+    } else {
+        console.log("YOU HAVE LOST THE GAME. SORRY BUDDY, BETTER LUCK NEXT TIME");
+        return false;
+    }
+}
