@@ -35,7 +35,7 @@ function userChoice() {
     return choice;
 }
 
-function checkChoice(choice = userChoice()) {
+function checUserkChoice(choice = userChoice()) {
     let validateThis = parseInt(choice);
     while ((validateThis < 1 || validateThis > 3) || (isNaN(validateThis))) {
         while (isNaN(validateThis)) {
@@ -47,6 +47,21 @@ function checkChoice(choice = userChoice()) {
             validateThis = userChoice();
         }
     }
-    return validateThis;
+    return validateThis - 1;
+}
+
+function isUserWinner(user = checUserkChoice(), comp = compChoice()) {
+    if (user == comp) {
+        console.log("It's a tie!!! AGAIN!");
+    } else {
+        if ((user == 0 && comp == 1) || (user == 1 && comp == 2) || (user == 2 && comp == 0)) {
+            console.log(`You loose, sorry. ${mapChoice(comp)} beats ${mapChoice(user)}. AI is taking over!`);
+            return false;
+        } else {
+            console.log(`Nice!!, you win. ${mapChoice(user)} beats ${mapChoice(comp)}. Keep em coming`);
+            return true;
+        }
+    }
+
 }
 
