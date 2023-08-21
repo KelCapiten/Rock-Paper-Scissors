@@ -67,11 +67,10 @@ function isUserWinner(user = checUserkChoice(), comp = compChoice()) {
 }
 
 function game() {
-    let i = 0;
     let user = 0;
     let comp = 0;
 
-    while (i < 5) {
+    while ( user < 5 && comp < 5) {
         let winner = isUserWinner();
 
         while (winner == undefined) {
@@ -85,7 +84,6 @@ function game() {
             comp += 1;
             console.log(`Your score is: ${user}. Comp score is: ${comp}.`);
         }
-    ++i;
     }
 
     if (user > comp) {
