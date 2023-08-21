@@ -13,6 +13,7 @@
 4. The winner gets displayed.
 -
 */
+game();
 
 function compChoice() {
     let choice = (Math.floor(Math.random()*3));
