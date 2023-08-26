@@ -1,96 +1,124 @@
-//THE SUDO CODE
-/*
-1. The comp generates a choice.
--create an array with rock, paper and scissors.
--creat a function that generates an integer between zero and. This integer will be mapped to the array.
--The function will return the selected item in the array.
-2. The user inputs their choice.
--The options will be predefined. User will make their choice by inputing a number that coresponds to a choice.
-3. Evaluate the choices.
--Check for a tie first by evaluating wherethere or not the numbers of both are the same.
--The result will be evaluated from the perspective of the player.
--Only the win condition will be checked for.
-4. The winner gets displayed.
--
-*/
-game();
+const buttonDiv = document.querySelector(".buttons");
+const playerScoreDisplay = document.querySelector(".playerScore");
+const compScoreDisplay = document.querySelector(".compScore");
+
+let intervalID = setInterval(handShow, 1000);
+let playerScore = 0;
+let compScore = 0;
+
+function resetGame() {
+    const displayMessage = document.querySelector(".messageDisplay");
+
+    if (playerScore >= 5) {
+        displayMessage.textContent = "YOU HAVE WON THE GAME AND BEAT THE SYSTEM. CONGRADULATIONS!!!";
+    } else {
+        if (compScore >= 5) {
+            displayMessage.textContent = "YOU HAVE LOST THE GAME. GIVE IT ANOTHER SHOT!!!";
+        }
+    }
+    playerScore = 0;
+    compScore = 0;
+    playerScoreDisplay.textContent = `${playerScore}`;
+    compScoreDisplay.textContent = `${compScore}`;
+}
+
+function updateScore(winner) {
+    const displayMessage = document.querySelector(".messageDisplay");
+
+    if (winner === 'player') {
+        playerScore += 1;
+        displayMessage.textContent = "YOU WINS THIS ROUND!!!";
+    } else {
+        compScore += 1;
+        displayMessage.textContent = "SORRY YOU LOOSE THIS ROUND. Hmmm AGAIN!!!";
+    }
+    playerScoreDisplay.textContent = `${playerScore}`;
+    compScoreDisplay.textContent = `${compScore}`;
+    intervalID = setInterval(handShow, 1000);
+}
+
+const buttonClickAction = function (theButton) {
+    let compChoiceVar = compChoice();
+
+    const displayMessage = document.querySelector(".messageDisplay");
+    displayMessage.textContent = "MAKE YOUR CHOICE!!";
+    const theButtonID = parseInt(theButton.target.id);
+
+    displayCompsChoice(compChoiceVar);
+    displayPlayersChoice(theButtonID);
+
+    setTimeout(() => {
+        if (theButtonID == compChoiceVar) {
+            displayMessage.textContent = "IT'S A TIE!. AGAIN!! MAKE A SELECTION.";
+            intervalID = setInterval(handShow, 1000);
+            return;
+        }
+    
+        if ((theButtonID == 0 && compChoiceVar == 2) || 
+            (theButtonID == 1 && compChoiceVar == 0) || 
+            (theButtonID == 2 && compChoiceVar == 1)) {
+            updateScore('player');
+        } else {
+            updateScore('comp');
+        }
+    }, 1000)
+}
+
+
+buttonDiv.addEventListener('click', buttonClickAction);
+
+let count = 0;
+function handShow() {
+    let images = ["images/rock.png", "images/paper.png", "images/scissors.png"];
+
+    const playerImage = document.querySelector('.playerHand');
+    const compImage = document.querySelector('.compHand');
+
+    playerImage.src = images[count];
+    compImage.src = images[count];
+
+    ++count;
+    if (count >= 3) {
+        count = 0;
+    }    
+    
+    if (compScore >= 5 || playerScore >= 5) {
+        const displayMessage = document.querySelector(".messageDisplay");
+        const playerScoreDisplay = document.querySelector(".playerScore");
+        const compScoreDisplay = document.querySelector(".compScore");
+
+        playerScoreDisplay.textContent = `${playerScore}`;
+        compScoreDisplay.textContent = `${compScore}`;
+
+        displayMessage.textContent = "VALIDATING RESULTS.";
+
+        setTimeout(() => {resetGame();}, 1000)
+    }
+}
+
+function updateChoiceDisplay(choice, imageElement, displayMessageElement) {
+    const images = ["/images/rock.png", "/images/paper.png", "/images/scissors.png"];
+    const messages = ["ROCK!!", "PAPER!!", "SCISSORS!!"];
+
+    imageElement.src = images[choice];
+    displayMessageElement.textContent = messages[choice];
+}
+
+function displayPlayersChoice(playerChoice) {
+    const playerImage = document.querySelector('.playerHand');
+    const displayMessage = document.querySelector(".messageDisplay");
+
+    clearInterval(intervalID);
+    updateChoiceDisplay(playerChoice, playerImage, displayMessage);
+}
+
+function displayCompsChoice(choice) {
+    const compImage = document.querySelector('.compHand');
+    const displayMessage = document.querySelector(".messageDisplay");
+
+    updateChoiceDisplay(choice, compImage, displayMessage);
+}
 
 function compChoice() {
-    let choice = (Math.floor(Math.random()*3));
-    return choice;
-}
-
-function mapChoice(index = compChoice()) {
-    let choiceArray = ["rock", "paper", "scissors"];
-    let choice = choiceArray[index];
-    return choice;
-}
-
-function userChoice() {
-    console.log("Make your selection.");
-    console.log("1. Rock?");
-    console.log("2. Paper?");
-    console.log("3. Scissors?");
-
-    let choice = window.prompt("What will it be?");
-    return choice;
-}
-
-function checUserkChoice(choice = userChoice()) {
-    let validateThis = parseInt(choice);
-    while ((validateThis < 1 || validateThis > 3) || (isNaN(validateThis))) {
-        while (isNaN(validateThis)) {
-            console.log("Use numbers only for your selection. Select either options 1, 2 or 3");
-            validateThis = userChoice();
-        }
-        while (validateThis < 1 || validateThis > 3) {
-            console.log("Only 3 options to choose from. 1, 2 or 3. Try again.");
-            validateThis = userChoice();
-        }
-    }
-    return validateThis - 1;
-}
-
-function isUserWinner(user = checUserkChoice(), comp = compChoice()) {
-    if (user == comp) {
-        console.log("It's a tie!!! AGAIN!");
-    } else {
-        if ((user == 0 && comp == 1) || (user == 1 && comp == 2) || (user == 2 && comp == 0)) {
-            console.log(`You loose the round, sorry. ${mapChoice(comp)} beats ${mapChoice(user)}. AI is taking over!`);
-            return false;
-        } else {
-            console.log(`Nice!!, you win the round. ${mapChoice(user)} beats ${mapChoice(comp)}. Keep em coming`);
-            return true;
-        }
-    }
-
-}
-
-function game() {
-    let user = 0;
-    let comp = 0;
-
-    while ( user < 5 && comp < 5) {
-        let winner = isUserWinner();
-
-        while (winner == undefined) {
-            console.log(`Your score is: ${user}. Comp score is: ${comp}.`);
-            winner = isUserWinner();
-        }
-        if (winner) {
-            user += 1;
-            console.log(`Your score is: ${user}. Comp score is: ${comp}.`);
-        } else {
-            comp += 1;
-            console.log(`Your score is: ${user}. Comp score is: ${comp}.`);
-        }
-    }
-
-    if (user > comp) {
-        console.log("YOU HAVE WON THE GAME!!");
-        return true;
-    } else {
-        console.log("YOU HAVE LOST THE GAME. SORRY BUDDY, BETTER LUCK NEXT TIME");
-        return false;
-    }
+    return (Math.floor(Math.random()*3)); 
 }

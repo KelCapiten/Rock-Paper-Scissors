@@ -8,8 +8,26 @@
     <script src="main.js" defer></script>
 </head>
 <body>
-    <div>
-        <div></div>
+    <div class="top"></div>
+    <div class="flex messageDisplay">WELCOME TO ROCK PAPER SCISSORS</div>
+    <div class="main">
+        <div class="flex handDisplay">
+            <div class="playerWindow">
+                <div class="windowName"><span>PLAYER: </span><span class="playerScore">0</span></div>
+                <img class="playerHand" style="width: 30vw;" src="images/paper.png" alt="paper hand">
+            </div>
+            <div><img style="width: 15dvw;" src="images/vs.png" alt="rock hand"></div>
+            <div class="compWindow">
+                <div class="windowName"><span>COMP: </span><span class="compScore">0</span></div>
+                <img class="compHand" style="width: 30vw;" src="images/rock.png" alt="rock hand">
+            </div>
+        </div>
+        <div class="buttons flex">
+            <div><button id="0">ROCK</button></div>
+            <div><button id="1">PAPER</button></div>
+            <div><button id="2">SCISSORS</button></div>
+        </div>
     </div>
+    <div class="bottom"></div>
 </body>
-</html>
+</html
